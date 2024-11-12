@@ -55,4 +55,3 @@ list = [1, 5, 8, 7, 94, 56, 8, 7]
 for i in list:
   print(i)
 
-#Exp_12
