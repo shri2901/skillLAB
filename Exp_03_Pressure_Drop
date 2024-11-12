@@ -1,0 +1,12 @@
+def bernoulli_equation(v1, p1, z1, v2, p2, z2, rho, g=9.81):
+ pressure_diff = (0.5 * rho * v1**2 + rho * g * z1 + p1) - (0.5 * rho * v2**2 + rho * g * z2 + p2)
+ return pressure_diff
+v1 = 5
+p1 = 100000
+z1 = 2
+v2 = 10
+p2 = 0
+z2 = 1
+rho = 1000
+pressure_diff = bernoulli_equation(v1, p1, z1, v2, p2, z2, rho)
+print("Pressure difference:", pressure_diff, "Pa")
