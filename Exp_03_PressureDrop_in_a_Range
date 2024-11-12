@@ -1,0 +1,27 @@
+import numpy as np
+import matplotlib.pyplot as plt
+# Constants
+density = 1.225 # Density of air in kg/m^3
+velocity_range = np.linspace(5, 25, 100) # Range of velocities (m/s)
+height_range = np.linspace(0, 10, 100) # Range of heights (m)
+# Function to calculate pressure using Bernoulli's principle
+def calculate_pressure(velocity, height):
+  constant = 0.5 * density * velocity_range[0]**2 + density *9.81 * height_range[0] # Calculate constant for minimum velocity and height
+  return constant - (0.5 * density * velocity**2 + density * 9.81 * height) # Using Bernoulli's equation
+# Calculate pressure differences for varying velocities and heights
+pressure_differences = np.zeros((len(velocity_range),len(height_range)))
+for i, velocity in enumerate(velocity_range):
+ for j, height in enumerate(height_range):
+  pressure_differences[i, j] = calculate_pressure(velocity, height)
+# Plotting
+plt.figure(figsize=(10, 6))
+# Create a contour plot for pressure differences
+X, Y = np.meshgrid(velocity_range, height_range)
+contour = plt.contourf(X, Y, pressure_differences.T, levels=20,cmap='viridis')
+cbar = plt.colorbar(contour)
+cbar.set_label('Pressure Difference (Pa)')
+plt.title("Effect of Change in Velocity and Height on Pressure Difference")
+plt.xlabel("Velocity (m/s)")
+plt.ylabel("Height (m)")
+plt.grid(True)
+plt.show()
