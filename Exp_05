@@ -1,0 +1,38 @@
+import numpy as np
+import matplotlib.pyplot as plt
+def calculate_diffusion_flux(D_AB, dC_dx):
+ """
+ Calculate the diffusion flux using Fick's first law of
+diffusion.
+
+ Parameters:
+ D_AB (float): Diffusion coefficient.
+ dC_dx (float): Concentration gradient.
+
+ Returns:
+ float: Diffusion flux.
+ """
+ flux = -D_AB * dC_dx
+ return flux
+# Define parameters
+initial_concentration = 8 # kg/m³
+final_concentration = 2 # kg/m³
+x = np.linspace(0.0001, 0.0015, 100) # Distance from the highpressure side (m)
+# Different values of diffusion coefficients
+diffusion_coefficients = [3e-11, 6e-11, 9e-11] # m²/s
+# Plotting
+plt.figure(figsize=(10, 6))
+for D_AB in diffusion_coefficients:
+ # Calculate concentration gradient
+ dC_dx = (final_concentration - initial_concentration) / x
+ # Calculate diffusion flux 42
+ flux = calculate_diffusion_flux(D_AB, dC_dx)
+ # Plot diffusion flux
+ plt.plot(x, flux, label=f'D_AB = {D_AB:.1e} m²/s')
+plt.title("Diffusion Flux vs. Distance")
+plt.xlabel("Distance from High-pressure Side (m)")
+plt.ylabel("Diffusion Flux (kg/(m²s))")
+plt.grid(True)
+plt.legend()
+plt.tight_layout()
+plt.show()
