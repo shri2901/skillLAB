@@ -1,0 +1,54 @@
+import math
+# Determining Mass Fractions from Mole Fractions
+# Variables
+yN2 = 0.781
+yO2 = 0.209
+yAr = 0.01
+#Mole fractions
+M_N2 = 28
+M_O2 = 32
+M_Ar = 39.9
+#Molar Masses
+# Calculations and Results
+M_air = yN2*M_N2+yO2*M_O2+yAr*M_Ar
+#[kg/kmol]
+print(f"The molar mass of air is {M_air:.3f} kg/kmol" )
+w_N2 = yN2*M_N2/M_air;
+w_O2 = yO2*M_O2/M_air;
+w_Ar = yAr*M_Ar/M_air;
+print(f"The mass fractions of N2, O2 and Ar in dry standard atmosphere are {(100*w_N2):.3f} percent, {(100*w_O2):.3f} percent and {(100*w_Ar):.3f} percent respectively")
+
+
+#Define the variables
+C1 = 0.1  # Concentration of pollutant in gas (mol/m^3)
+C2 = 0.0  # Concentration of pollutant in water (mol/m^3, negligible)
+k = 0.05  # Mass transfer coefficient (m/s)
+# Calculate mass flux using the formula J = k * (C1 - C2)
+mass_flux = k * (C1 - C2)
+# Output the result
+print(f"The mass flux of the pollutant from the gas to the water surface is {mass_flux:.3f} mol/m²·s")
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import odeint
+# Parameters
+k = 0.05  # Mass transfer coefficient (m/s)
+C_w = 0.0  # Concentration of pollutant in water (mol/m^3)
+C_g0 = 0.1  # Initial concentration of pollutant in gas (mol/m^3)
+# Differential equation
+def model(C_g, t):
+  return -k * (C_g - C_w)
+# Time points (from 0 to 10 seconds)
+t = np.linspace(0, 10, 100)
+# Solve the differential equation
+C_g = odeint(model, C_g0, t)
+# Plotting the results
+plt.plot(t, C_g, label='C_g(t)', color='blue')
+plt.title('Concentration of Pollutant in Gas Phase Over Time')
+plt.xlabel('Time (s)')
+plt.ylabel('Concentration (mol/m³)')
+plt.axhline(y=C_w, color='r', linestyle='--', label='C_w = 0')
+plt.legend()
+plt.grid()
+plt.show()
