@@ -1,3 +1,5 @@
+#Part_01
+
 import numpy as np
 import matplotlib.pyplot as plt
 def calculate_diffusion_flux(D_AB, dC_dx):
@@ -36,3 +38,30 @@ plt.grid(True)
 plt.legend()
 plt.tight_layout()
 plt.show()
+
+Part_02
+
+import math
+def steady_state_diffusion(D, dx, A, conc1, conc2):
+ """
+ Calculates steady-state mass flux through a plane area.
+ Args:
+ D: Diffusion coefficient (m^2/s)
+ dx: Distance between concentration points (m)
+ A: Area of the plane (m^2)
+ conc1: Concentration at point 1 (kg/m^3)
+ conc2: Concentration at point 2 (kg/m^3)
+ Returns:
+ Mass flux (kg/s)
+ """
+ flux = -D * A * (conc1 - conc2) / dx
+ return flux
+# Example usage
+D = 1e-9 # Diffusion coefficient (m^2/s)
+dx = 0.01 # Distance between points (m)
+A = 0.1 # Area (m^2)
+conc1 = 10 # Concentration at point 1 (kg/m^3)
+conc2 = 5 # Concentration at point 2 (kg/m^3)
+mass_flux = steady_state_diffusion(D, dx, A, conc1, conc2)
+print("Mass flux:", mass_flux, "kg/s")
+
