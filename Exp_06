@@ -1,3 +1,4 @@
+Part 01
 import math
 # Determining Mass Fractions from Mole Fractions
 # Variables
@@ -18,7 +19,7 @@ w_O2 = yO2*M_O2/M_air;
 w_Ar = yAr*M_Ar/M_air;
 print(f"The mass fractions of N2, O2 and Ar in dry standard atmosphere are {(100*w_N2):.3f} percent, {(100*w_O2):.3f} percent and {(100*w_Ar):.3f} percent respectively")
 
-
+Part 02
 #Define the variables
 C1 = 0.1  # Concentration of pollutant in gas (mol/m^3)
 C2 = 0.0  # Concentration of pollutant in water (mol/m^3, negligible)
@@ -28,7 +29,7 @@ mass_flux = k * (C1 - C2)
 # Output the result
 print(f"The mass flux of the pollutant from the gas to the water surface is {mass_flux:.3f} mol/m²·s")
 
-
+Part 03
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import odeint
