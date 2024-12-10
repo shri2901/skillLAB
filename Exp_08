@@ -1,0 +1,18 @@
+Concentration Profile Batch Reactor (EXP_08)
+
+
+import numpy as np
+from scipy.integrate import odeint
+import matplotlib.pyplot as plt
+k = 0.1 # (1/s)
+C_A0 = 1 # mol/L
+def dC_Adt(C_A, t):
+ return -k * C_A
+t_span = np.linspace(0, 100, 1001) # Time points from 0 to 100 seconds with 1001 points
+C_A = odeint(dC_Adt, C_A0, t_span)
+plt.plot(t_span, C_A)
+plt.xlabel("Time (s)")
+plt.ylabel("Concentration of A (mol/L)")
+plt.title("Concentration Profile in a Batch Reactor (First-Order Reaction)")
+plt.grid(True)
+plt.show()
