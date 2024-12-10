@@ -1,89 +1,14 @@
-!pip install gekko
-import numpy as np
-import matplotlib.pyplot as plt
-from gekko import GEKKO
-m = GEKKO(remote=False)
-nt = 501
-m.time = np.linspace(0,1,nt)
-
-# Variables
-x1 = m.Var(value=1)
-x2 = m.Var(value=0)
-x3 = m.Var(value=0)
-T = m.MV(value=398,lb=298,ub=398)
-T.STATUS = 1
-T.DCOST = 1e-6
-k1 = m.Intermediate(4000*m.exp(-2500/T))
-k2 = m.Intermediate(6.2e5*m.exp(-5000/T))
-p = np.zeros(nt)
-p[-1] = 1.0
-final = m.Param(value=p)
-# Intermediates
-r1 = m.Intermediate(k1*x1**2)
-r2 = m.Intermediate(k2*x2)
-# Equations
-m.Equation(x1.dt()==-r1)
-m.Equation(x2.dt()== r1 - r2)
-m.Equation(x3.dt()== r2)
-
-# Objective Function
-# maximize final x2
-m.Maximize(x2*final)
-m.options.IMODE = 6
-m.options.NODES = 3
-m.solve()
-print(f'Optimal x2(tf): {x2.value[-1]:0.4f}')
-plt.figure(figsize=(6,4))
-plt.subplot(2,1,1)
-plt.plot(m.time,x1.value,'k:',\
-         lw=2,label=r'$x_1$')
-plt.plot(m.time,x2.value,'b-',\
-         lw=2,label=r'$x_2$')
-plt.plot(m.time,x3.value,'r--',\
-         lw=2,label=r'$x_3$')
-plt.plot(m.time[-1],x2.value[-1],'o',\
-         color='orange',markersize=5,\
-         label=r'$x_2\left(t_f\right)$')
-plt.legend(loc='best'); plt.grid()
-plt.ylabel('Mole Fraction')
-plt.subplot(2,1,2)
-plt.plot(m.time,T.value,'r-',\
-         lw=2,label='Temperature')
-plt.ylabel(r'$T/;(^oC)$'); plt.legend(loc='best')
-plt.xlabel('Time'); plt.ylabel('Temperature (K)')
-plt.grid(); plt.tight_layout()
-plt.savefig('batch_results.png',dpi=300)
-plt.show()
-
-
-
-import numpy as np
-from scipy.integrate import odeint
-import matplotlib.pyplot as plt
-# Define the reaction rate constant
-k = 0.1 # (1/s)
-# Define the initial concentration
-C_A0 = 1 # mol/L
-# Define the ODE function
-def dC_Adt(C_A, t):
- """
- This function defines the rate of change of concentration (dC_A/dt) for
-the reactant A.
- Args:
- C_A: Concentration of reactant A (mol/L)
- t: Time (s)
- Returns:
- Rate of change of concentration (dC_A/dt) in mol/L per second
- """
- return -k * C_A
-# Set up the time span for simulation
-t_span = np.linspace(0, 100, 1001) # Time points from 0 to 100 seconds with 1001 points
-# Solve the ODE for concentration vs. time
-C_A = odeint(dC_Adt, C_A0, t_span)
-# Plot the concentration profile
-plt.plot(t_span, C_A)
-plt.xlabel("Time (s)")
-plt.ylabel("Concentration of A (mol/L)")
-plt.title("Concentration Profile in a Batch Reactor (First-Order Reaction)")
-plt.grid(True)
-plt.show()
+The mass fractions of N2, O2 and Ar in dry standard atmosphere (EXP_07)
+import math
+yN2 = 0.781
+yO2 = 0.209
+yAr = 0.01
+M_N2 = 28
+M_O2 = 32
+M_Ar = 39.9
+M_air = yN2*M_N2+yO2*M_O2+yAr*M_Ar
+print(f"The molar mass of air is {M_air:.3f} kg/kmol" )
+w_N2 = yN2*M_N2/M_air;
+w_O2 = yO2*M_O2/M_air;
+w_Ar = yAr*M_Ar/M_air;
+print(f"The mass fractions of N2, O2 and Ar in dry standard atmosphere are {(100*w_N2):.3f} percent, {(100*w_O2):.3f} percent and {(100*w_Ar):.3f} percent respectively")
