@@ -1,0 +1,28 @@
+import numpy as np
+from scipy.integrate import odeint
+import matplotlib.pyplot as plt
+
+def reaction(ca, k):
+ r = k * ca
+ return r
+
+def plug_flow(ca, x, k, ni, u):
+ r = reaction(ca, k)
+ dcadx = ni * r / u
+ return dcadx
+
+# kinetic constant
+k = 0.1
+# reactor length
+L = 10
+x = np.linspace(0, L, 101)
+ca0 = 0.6
+ni = -1
+u = 0.5
+sol = odeint(plug_flow, ca0, x, args=(k, ni, u))
+plt.plot(x, sol)
+plt.plot(x[::4], [ca0 * np.exp(-x*k/u) for x in x[::4]],'o')
+plt.xlabel('x')
+plt.ylabel('$C_{a}$')
+plt.legend(['numerical', 'analytical'])
+plt.plot
