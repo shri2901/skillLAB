@@ -1,0 +1,47 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define parameters
+reactor_length = 1 # m (length of the reactor)
+volumetric_flow_rate = 0.1 # m^3/s (volumetric flow rate)
+initial_concentration = 1 # mol/L (initial concentration of reactant A)
+reaction_rate_constant = 0.1 # (1/s) (reaction rate constant)
+
+# Function for calculating the residence time
+def residence_time(reactor_length, volumetric_flow_rate):
+  return reactor_length / volumetric_flow_rate
+
+# Function defining the rate of change of concentration
+def dC_AdV(C_A):
+  return -reaction_rate_constant * C_A
+
+# Calculate residence time
+tau = residence_time(reactor_length, volumetric_flow_rate)
+
+# Discretize the reactor volume
+num_elements = 20 # Number of elements for discretization
+dV = reactor_length / num_elements # Volume increment
+
+# Set up the concentration array
+C_A = np.zeros(num_elements)
+C_A[0] = initial_concentration # Set initial concentration at the inlet
+
+# Solve the ODE for concentration profile using Euler's method
+for i in range(1, num_elements):
+  dC = dC_AdV(C_A[i - 1]) * dV # Calculate change in concentration
+  C_A[i] = C_A[i - 1] + dC # Update concentration based on previous value
+
+# Position array for plotting
+positions = np.linspace(0, reactor_length, num_elements)
+# Plotting the concentration profile
+plt.figure(figsize=(10, 6))
+plt.plot(positions, C_A, marker='o', color='b', label='Concentration of A')
+plt.title('Concentration Profile of Reactant A Along the Reactor')
+plt.xlabel('Position Along Reactor (m)')
+plt.ylabel('Concentration of A (mol/L)')
+plt.axhline(y=0, color='r', linestyle='--', label='C_A = 0 (No Reactant)')
+plt.grid()
+plt.legend()
+plt.xlim(0, reactor_length)
+plt.ylim(-0.1, initial_concentration + 0.1)
+plt.show()
