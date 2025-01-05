@@ -1,7 +1,4 @@
-The mass flux of the pollutant from the gas to the water surface (EXP_06)
-
-
-Program_01
+#Program_01
 C1 = 0.1  # Concentration of pollutant in gas (mol/m^3)
 C2 = 0.0  # Concentration of pollutant in water (mol/m^3, negligible)
 k = 0.05  # Mass transfer coefficient (m/s)
@@ -9,7 +6,7 @@ mass_flux = k * (C1 - C2)
 print(f"The mass flux of the pollutant from the gas to the water surface is {mass_flux:.3f} mol/m²·s")
 
 
-Program_02
+#Program_02
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import odeint
