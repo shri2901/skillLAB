@@ -28,14 +28,3 @@ plt.axhline(y=C_w, color='r', linestyle='--', label='C_w = 0')
 plt.legend()
 plt.grid()
 plt.show()
-
-
-Program_03
-def convective_mass_transfer(v, C_bulk, C_s):
-  k = 0.1 * v
-  return k
-v = 1
-C_bulk = 100
-C_s = 50
-k = convective_mass_transfer(v, C_bulk, C_s)
-print(k)
