@@ -1,4 +1,3 @@
-The mass fractions of N2, O2 and Ar in dry standard atmosphere (EXP_07)
 import math
 yN2 = 0.781
 yO2 = 0.209
