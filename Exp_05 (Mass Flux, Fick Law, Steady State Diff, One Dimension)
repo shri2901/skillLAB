@@ -39,7 +39,7 @@ plt.legend()
 plt.tight_layout()
 plt.show()
 
-Part_02
+#Part_02
 
 import math
 def steady_state_diffusion(D, dx, A, conc1, conc2):
