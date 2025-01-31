@@ -1,0 +1,5 @@
+import numpy as np
+from matplotlib import pyplot
+
+L = float(input('Enter the value'))
+print(f'length is {L:.2e}')
